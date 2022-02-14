@@ -8,7 +8,7 @@ function ShowContent({content}) {
         // that takes over other parts of the site
         // not sure about that though.
         document.open();
-        document.write(content);
+        document.write(content.replace("</head>", "<base href=\"https://interpunct.info/\"></head>"));
         return () => {
             console.log("TODO hide content");
         };
