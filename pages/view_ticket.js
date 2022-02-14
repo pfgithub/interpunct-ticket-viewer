@@ -3,6 +3,10 @@ import { useEffect, useState } from 'react'
 
 function ShowContent({content}) {
     useEffect(() => {
+        // might be xss vulnerable
+        // if you open a bad link it might be able to install a serviceworker
+        // that takes over other parts of the site
+        // not sure about that though.
         document.open();
         document.write(content);
         return () => {
@@ -16,8 +20,6 @@ function ShowContent({content}) {
 export default function ViewTicket() {
     const [content, setContent] = useState(undefined);
 
-    // right I forgot how react works you have to do some weird thing
-    // don't you
     useEffect(() => {
         fetch("/api/fetch_ticket_messages"+location.search).then(r => r.json()).then(r => {
             setContent(r);

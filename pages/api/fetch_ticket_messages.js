@@ -10,7 +10,7 @@ export default function handler(req, res) {
     || id2 == null || !id2.match(/^[0-9]+$/)) {
         return res.status(400).json({kind: "error", emsg: "error; bad"});
     }
-    fetch("https://cdn.discordapp.com/attachments/"+id1+"/"+id2+"/log.html").then(r => r.text()).then(r => {
+    return fetch("https://cdn.discordapp.com/attachments/"+id1+"/"+id2+"/log.html").then(r => r.text()).then(r => {
         return res.status(200).json({kind: "success", content: minify(r, {
             collapseWhitespace: true,
         })});
