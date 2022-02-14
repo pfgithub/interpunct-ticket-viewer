@@ -2,20 +2,22 @@ import Head from 'next/head'
 import { useEffect, useState } from 'react'
 
 function ShowContent({content}) {
-    useEffect(() => {
-        // might be xss vulnerable
-        // if you open a bad link it might be able to install a serviceworker
-        // that takes over other parts of the site
-        // not sure about that though.
-        document.open();
-        document.write(content.replace("</head>", "<base href=\"https://interpunct.info/\"></head>"));
-        return () => {
-            console.log("TODO hide content");
-        };
-    }, []);
-
-    return <></>;
+    return <iframe
+        srcDoc={content.replace("</head>", "<base href=\"https://interpunct.info/\"></head>")}
+        style={{
+            "border": "none",
+            "position": "absolute",
+            "top": "0",
+            "left": "0",
+            "bottom": "0",
+            "right": "0",
+            "width": "100%",
+            "height": "100%",
+        }}
+    />;
 }
+
+// we can fetch this serverside if we want to have a static site with no js
 
 export default function ViewTicket() {
     const [content, setContent] = useState(undefined);
